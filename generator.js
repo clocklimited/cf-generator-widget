@@ -6,6 +6,9 @@ var kickoff = require('kickoff')
   , generate = kickoff.generate
   , extend = require('lodash.assign')
   , request = require('request')
+  , async = require('async')
+  , join = require('path').join
+  , fs = require('fs')
   , allPartsData = null
   , partNames = []
 
@@ -40,7 +43,6 @@ function getParts (cb) {
           }
         }
       })
-      console.log(partNames)
       cb(null)
     } else {
       throw err
@@ -76,7 +78,42 @@ ProjectWidgetGenerator.prototype.generate = function (dest, cb) {
       }
     )
     inquirer.prompt(this.prompts, function (userInput) {
-      this._generate(dest, this.createConfig(userInput), cb)
+      var config = require(join(dest, 'config.json'))
+      async.series(
+        [
+          function () {
+            // Get Stylus
+            var stylusDest = join(dest, config.global.componentsPath.stylus)
+              , stylusFiles = []
+            if (fs.statSync(stylusDest).isDirectory()) {
+              allPartsData.tree.forEach(function (item) {
+                if (item.type === 'blob') {
+                  var regExp = new RegExp('^Parts\\/' + userInput.template + '\\/source\\/stylus\\/([\\w-]+)\\.styl$')
+                    , partCheck = item.path.match(regExp)
+                  if (partCheck) {
+                    stylusFiles.push(item.url)
+                  }
+                }
+              })
+              // stylusFiles.forEach(function (file) {
+              //   fs.writeFileSync(stylusDest, template(fs.readFileSync(src))(settings))
+              // })
+            }
+          }
+        , function () {
+            // Get JS
+          }
+        , function () {
+            // Get Site Component
+          }
+        , function () {
+            // Get Admin Component
+          }
+        ]
+      , function () {
+          this._generate(dest, this.createConfig(userInput), cb)
+        }.bind(this)
+      )
     }.bind(this))
   }.bind(this))
 }

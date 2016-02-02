@@ -15,11 +15,11 @@
     "generate-project-widget": "bin/generate"
   },
   "dependencies": {
+    "async": "^1.5.2",
     "inquirer": "^0.9.0",
     "kickoff": "clocklimited/kickoff#v0.2.0",
     "lodash.assign": "^3.2.0",
-    "request": "^2.69.0",
-    "slugg": "^0.1.2"
+    "request": "^2.69.0"
   },
   "devDependencies": {
     "eslint": "^1.4.1",
