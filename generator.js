@@ -1,6 +1,7 @@
 module.exports = ProjectWidgetGenerator
 
 var kickoff = require('kickoff')
+  , inquirer = require('inquirer')
   , Generator = kickoff.Generator
   , generate = kickoff.generate
   , extend = require('lodash.assign')
@@ -63,16 +64,22 @@ ProjectWidgetGenerator.prototype.prompts =
     , message: 'Describe this widget'
     , validate: required
     }
-  , { type: 'list'
-    , name: 'template'
-    , message: 'Which widget template would you like to use?'
-    , choices: ['Custom']
-    }
   ]
-
-ProjectWidgetGenerator.prototype._generate = function (path, config, cb) {
+ProjectWidgetGenerator.prototype.generate = function (dest, cb) {
   getParts(function (err) {
     if (err) throw err
-    generate(__dirname, path, config, cb)
-  })
+    this.prompts.push(
+      { type: 'list'
+      , name: 'template'
+      , message: 'Which widget template would you like to use?'
+      , choices: partNames
+      }
+    )
+    inquirer.prompt(this.prompts, function (userInput) {
+      this._generate(dest, this.createConfig(userInput), cb)
+    }.bind(this))
+  }.bind(this))
+}
+ProjectWidgetGenerator.prototype._generate = function (path, config, cb) {
+  generate(__dirname, path, config, cb)
 }
