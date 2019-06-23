@@ -1,5 +1,7 @@
 # Generator: Project Widget
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/clocklimited/cf-generator-widget.svg)](https://greenkeeper.io/)
+
 ## Installation
 
 ```
