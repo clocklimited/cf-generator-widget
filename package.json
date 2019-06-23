@@ -15,18 +15,18 @@
     "generate-project-widget": "bin/generate"
   },
   "dependencies": {
-    "async": "^1.5.2",
-    "inquirer": "^0.9.0",
+    "async": "^3.1.0",
+    "inquirer": "^6.4.1",
     "kickoff": "clocklimited/kickoff#v0.2.0",
-    "lodash.assign": "^3.2.0",
+    "lodash.assign": "^4.2.0",
     "request": "^2.69.0"
   },
   "devDependencies": {
-    "eslint": "^1.4.1",
+    "eslint": "^6.0.0",
     "eslint-config-clock": "^1.0.0",
-    "eslint-config-standard": "^4.3.2",
-    "eslint-plugin-standard": "^1.3.0",
-    "lodash.template": "^3.6.2",
-    "mocha": "^2.3.2"
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-standard": "^4.0.0",
+    "lodash.template": "^4.4.0",
+    "mocha": "^6.1.4"
   }
 }
